@@ -5,6 +5,8 @@ date: "2015年7月4日"
 output: html_document
 ---
 
+てすてす。
+
 ```{r child="children/chunk_options.Rmd"}
 ```
 
