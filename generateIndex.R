@@ -3,7 +3,7 @@ local({
   on.exit(file.remove(md_tmp))
 
   cat('---
-title: "Index"
+title: "GitとGitHubとRStudio"
 output: html_document
 ---
 ', file = md_tmp)
