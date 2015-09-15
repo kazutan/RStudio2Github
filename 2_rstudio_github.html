@@ -70,7 +70,6 @@ img {
 <li>RStudioとGitHubの連携</li>
 </ol></h1>
 <h4 class="author"><em>kazutan</em></h4>
-<h4 class="date"><em>2015年9月12日</em></h4>
 </div>
 
 
@@ -119,25 +118,25 @@ img {
 <h4>リモートリポジトリとつなげる</h4>
 <ol start="6" style="list-style-type: decimal">
 <li>Tools→Shell…で、端末を開く</li>
-<li><p>以下のコマンドを入力</p>
-<p>$ git remote add origin {リポジトリURL}</p></li>
+<li>以下のコマンドを入力</li>
 </ol>
+<pre><code>$ git remote add origin {リポジトリURL}</code></pre>
 <p>これは、Localのリポジトリに対して「リモート先として{リポジトリURL}を追加してくれ」という命令です。正確には違うと思いますが多分大丈夫です。このまま端末でいきます:</p>
 <ol start="8" style="list-style-type: decimal">
 <li><p>以下のコマンドを入力</p>
-<p>$ git add .</p></li>
+<pre><code>$ git add .</code></pre></li>
 </ol>
 <p>ローカルのリポジトリにこのプロジェクトたちのファイルを登録します。詳しくは別紙資料を。<br />この後Pushしたくなりますが、実行すると(多分)弾かれます。「一度もPullしてねーけぇだめじゃ(適当意訳)」と怒られます。そこで先にリモート先のリポジトリをPullします。</p>
 <ol start="9" style="list-style-type: decimal">
-<li><p>以下のコマンドを入力</p>
-<p>$ git pull {リポジトリURL}</p></li>
+<li>以下のコマンドを入力</li>
 </ol>
+<pre><code>$ git pull {リポジトリURL}</code></pre>
 <p>うまくpullしてmergeできるようなら、commitコメント入力を求められます。なおこの時のエディタはvimなので、vimの操作方法が求められます。別紙資料p.26参照。<br />もしここでpullがエラーでうまく行かない時は、とりあえずfetchしてからrebaseやmergeを実行してください。</p>
 <p>この作業が成功すると、LocalのプロジェクトフォルダにGitHubのリポジトリにあったLicenseやREADME.mdなどが入ってくるはずです。あとはpushしてみましょう。</p>
 <ol start="10" style="list-style-type: decimal">
-<li><p>以下のコマンドを入力</p>
-<p>$ git push</p></li>
+<li>以下のコマンドを入力</li>
 </ol>
+<pre><code>$ git push</code></pre>
 <p>うまく行ったかどうか、GitHubの自分のリポジトリを確認してください。ちゃんとGitHubにまで届いていたらOKです。こで、<strong>一度RStudioを再起動</strong>してください。</p>
 </div>
 </div>
