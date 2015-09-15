@@ -1,0 +1,15 @@
+sequenceDiagram
+  participant 開発者
+  participant 作業コピー
+  participant ローカルリポジトリ
+  participant 共有リポジトリ
+  
+  共有リポジトリ->>ローカルリポジトリ: (1)pull(fetch)
+  loop ローカルでの作業
+    ローカルリポジトリ->>作業コピー: (2)checkout
+    開発者->>作業コピー: (3)ファイル等を編集
+    Note right of 開発者: ある程度<br/>まとまった更新が<br/>できたら次へ
+    作業コピー->>ローカルリポジトリ: (4)commit
+  end
+  Note left of ローカルリポジトリ: 問題ないと<br/>判断したら<br/>共有へ
+  ローカルリポジトリ->>共有リポジトリ: (5)push

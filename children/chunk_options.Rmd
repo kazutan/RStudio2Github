@@ -1,5 +1,6 @@
 ```{r chunk_options, include=FALSE}
 library(knitr)
+library(DiagrammeR)
 
 opts_chunk$set(
   cache     = TRUE,

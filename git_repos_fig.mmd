@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant ローカルA
+  participant 共有
+  participant ローカルB
+  
+  共有->>ローカルA: pull(v1.00)
+  ローカルA->>ローカルA: 編集(A1)
+  ローカルA->>共有: push(v1.00+A1)
+  共有->>共有: A1を反映(v1.01)
+  共有->>ローカルB: pull(v1.01)
+  ローカルB->>ローカルB: 編集(B1)
+  ローカルB->>共有: push(v1.01+B1)
+  共有->>共有: B1を反映(v1.02)

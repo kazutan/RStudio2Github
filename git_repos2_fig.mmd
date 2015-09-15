@@ -1,0 +1,15 @@
+sequenceDiagram
+  participant ローカルA
+  participant 共有
+  participant ローカルB
+  
+  共有->>ローカルA: pull(v1.02)
+  共有->>ローカルB: pull(v1.02)
+  ローカルA->>ローカルA: 編集(A2)
+  ローカルB->>ローカルB: 編集(B2)
+  ローカルA->>共有: push(v1.02+A2)
+  共有->>共有: A2を反映(v1.03)
+  ローカルB-->>共有: push(v1.02+B2)
+  共有-->共有: v1.03にv1.02+B2はズレてる
+  Note right of 共有: diffをみて、<br/>mergeを行う
+  共有->>共有: 反映(v1.04)

@@ -19,6 +19,14 @@
 <script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<script src="libs/htmlwidgets-0.5/htmlwidgets.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-0.7/DiagrammeR.js"></script>
 <link href='libs/fluidbox/css/fluidbox.css' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 <link href='include/css/style.css' rel='stylesheet' type='text/css'>
@@ -70,28 +78,70 @@ img {
 <li>GitとGitHub</li>
 </ol></h1>
 <h4 class="author"><em>kazutan</em></h4>
-<h4 class="date"><em>2015年9月12日</em></h4>
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="git" class="section level2">
+<h2>Gitとは</h2>
+<p>Gitとはバージョン管理のためのツールです。Gitを利用することでバージョン管理が容易になりますし、さらに共同開発も効率的に行うことができます。</p>
+<p>考え方などちょっと慣れないところがあるかも知れませんが、一度イメージができるとそこまで難しく感じなくなると思います。</p>
+<div id="git" class="section level3">
+<h3>Gitを使った開発の基本ワークフロー</h3>
+<p>Gitを使った基本のワークフローを図に示します:</p>
+<p><div id="htmlwidget-1688" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-1688">{"x":{"diagram":"sequenceDiagram\n  participant 開発者\n  participant 作業コピー\n  participant ローカルリポジトリ\n  participant 共有リポジトリ\n  \n  共有リポジトリ->>ローカルリポジトリ: (1)pull(fetch)\n  loop ローカルでの作業\n    ローカルリポジトリ->>作業コピー: (2)checkout\n    開発者->>作業コピー: (3)ファイル等を編集\n    Note right of 開発者: ある程度<br/>まとまった更新が<br/>できたら次へ\n    作業コピー->>ローカルリポジトリ: (4)commit\n  end\n  Note left of ローカルリポジトリ: 問題ないと<br/>判断したら<br/>共有へ\n  ローカルリポジトリ->>共有リポジトリ: (5)push"},"evals":[]}</script></p>
+<p>ポイントは<strong>リポジトリ</strong>という概念です。リポジトリの言葉の意味は…ググってください。パッケージやプロジェクトなどは、このリポジトリにまとめます。<strong>プロジェクトなどの本体はリポジトリ</strong>です。つまり、リポジトリを中心として、プロジェクト内のファイルを管理していくこととなります。</p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="figures//1_git_github_files/figure-html/pressure-1.png" title="" alt="" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="commit" class="section level3">
+<h3>リポジトリから作業コピー、そして編集とcommit</h3>
+<p>上の図ではリポジトリとして「ローカルリポジトリ」と「共有リポジトリ」とありますが、まずはローカルリポジトリだけを考えます。</p>
+<p>まずはローカルリポジトリにあるファイルたちを手元にコピーします(<strong>checkout</strong>)。これによってできた手元のファイルたちを<strong>作業コピー</strong>といいます。これをああだこうだと編集して作っていきます。そう、<strong>「コードを直接いじったりするのはコピーしたファイル」</strong>です。ここが重要です。</p>
+<p>本来リポジトリはプロジェクトやパッケージの本体です。それが気軽に編集していじれるとなると、正直不安ですし、リスクが高いでしょう。<strong>本体はとても大切なもの</strong>です。なのでコピーを作成して編集して、いけるかどうかを検証するのです。</p>
+<p>手元の環境でテストを実施し、問題ないとなれば、その変更をローカルリポジトリへ反映(<strong>commit</strong>)します。これで本体であるリポジトリが更新されます。</p>
+<p>もし、個人で開発していて特に公開も共有もしない、つまり「ただバージョン管理をしたいだけ」であれば、これでOKです。どんどんこのループを回しましょう。</p>
+</div>
+<div class="section level3">
+<h3>共有リポジトリとローカルリポジトリ</h3>
+<p>Gitは共同開発を効率よく進ませるために開発されました。この共同開発でポイントになるのが<strong>共有リポジトリとローカルリポジトリ</strong>です。</p>
+<p><strong>共有リポジトリ</strong>(リモートリポジトリ)は、その名の通り共有のためのリポジトリで、他の人がアクセスできるような場所に置きます。先ほどまで説明したリポジトリはローカルにあるため、ローカル内だけです。共同開発をするためには共有リポジトリをメインとし、これを中心に開発していくこととなります。言い換えるなら、<strong>共有リポジトリをみんなで開発していく</strong>ということになります。つまり一番大事なのは共有リポジトリです。</p>
+<p>基本的な流れは、先に示した図のとおりです。まず共有リポジトリにあるリポジトリを、ローカルのリポジトリへpullします。あとは前述した流れで編集してこのローカルリポジトリへcommitします。この段階では、まだ共有リポジトリは前のままです。</p>
+<p>このローカルリポジトリの更新を、共有リポジトリへ反映させます。これをpushといいます。これが問題なく処理されれば、共有リポジトリが更新されることとなります。</p>
+<p>以降、(1)共有リポジトリから最新の状態(head)をローカルリポジトリへpull、(2)ローカルリポジトリの内容を作業コピーへcheckout、(3)内容を編集、(4)編集した内容をローカルリポジトリへcommit、(5)ローカルリポジトリの更新を共有リポジトリへpush、を繰り返して開発していくこととなります。</p>
+</div>
+<div class="section level3">
+<h3>なんでこんな面倒なことになるの?</h3>
+<p>正直この手続はかなり面倒なものだと感じるはずです。ではなぜこのような手続きが必要なのでしょうか。</p>
+<p>差分とバージョン管理だけなら、ローカルリポジトリまでの話で十分管理できます。差分やログが記録できますし、ブランチを切ったりすればより柔軟に進めることも可能です。ですがGitの一番のポイントは「共同開発」を念頭においていることです。共同開発をスムーズに進めていくために、ローカルリポジトリの上に共有リポジトリを設置する必要があるのです。次にその辺りを考えます。</p>
+</div>
+<div id="merge" class="section level3">
+<h3>共同開発と競合・merge</h3>
+<p>共同開発をするということは、複数の人が同一のリポジトリに対して編集して更新を行っていきます。したがってメンバー全員がこのリポジトリにアクセスできなければいけません。したがって、共有リポジトリを中心に回していくこととなります。</p>
+<div class="section level4">
+<h4>競合が発生しないパターン</h4>
+<p>まずは、スムーズなパターンを見ていきます:</p>
+<p><div id="htmlwidget-7464" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-7464">{"x":{"diagram":"sequenceDiagram\n  participant ローカルA\n  participant 共有\n  participant ローカルB\n  \n  共有->>ローカルA: pull(v1.00)\n  ローカルA->>ローカルA: 編集(A1)\n  ローカルA->>共有: push(v1.00+A1)\n  共有->>共有: A1を反映(v1.01)\n  共有->>ローカルB: pull(v1.01)\n  ローカルB->>ローカルB: 編集(B1)\n  ローカルB->>共有: push(v1.01+B1)\n  共有->>共有: B1を反映(v1.02)"},"evals":[]}</script></p>
+<p>この場合、Aが作業して共有リポジトリがv1.01に更新されます。その後Bが作業するために、Aが更新したv1.01の共有リポジトリをBのローカルリポジトリへpullし、編集して共有リポジトリへpushします。これによって共有リポジトリはv1.02へと更新されることとなります。実にスムーズですね。</p>
+</div>
+<div class="section level4">
+<h4>競合が発生するパターン</h4>
+<p>では逆に、スムーズにいかないパターンを見てみます:</p>
+<p><div id="htmlwidget-1449" style="width:672px;height:480px;" class="DiagrammeR"></div>
+<script type="application/json" data-for="htmlwidget-1449">{"x":{"diagram":"sequenceDiagram\n  participant ローカルA\n  participant 共有\n  participant ローカルB\n  \n  共有->>ローカルA: pull(v1.02)\n  共有->>ローカルB: pull(v1.02)\n  ローカルA->>ローカルA: 編集(A2)\n  ローカルB->>ローカルB: 編集(B2)\n  ローカルA->>共有: push(v1.02+A2)\n  共有->>共有: A2を反映(v1.03)\n  ローカルB-->>共有: push(v1.02+B2)\n  共有-->共有: v1.03にv1.02+B2はズレてる\n  Note right of 共有: diffをみて、<br/>mergeを行う\n  共有->>共有: 反映(v1.04)"},"evals":[]}</script></p>
+<p>共同開発の場合、大抵は<strong>同時に作業</strong>します。つまり、上の図のような事態になることだって十分にありえるのです。この場合、Bがpushしてきた編集内容とv1.02+A2の編集内容と比較し、mergeして問題ないかをチェックします。</p>
+<p>もしそのままmergeしても問題がない場合、すんなりとBの編集内容を採用していけばOkです。しかし、Bの編集をそのままmergeするとまずい(機能が動かなくなるなど)場合は、編集内容をチェックして、必要であれば書き換えや却下するなどして統合していきます。ここが割と面倒です。</p>
+<p>なお、先ほど「競合がないパターン」で示した流れであっても問題が発生することもありますが、ソレについては省略します。</p>
+<p>このような手続きを取ることにより、共有リポジトリを変更する際には必ず管理者がその更新をチェックできるようになります。つまり他の人との編集内容がバッティングしても慎重に対処することができるのです。またいつでも共有リポジトリはpullできるので、細心の状態へ追いつくことも容易ですし、深刻な不具合発生のためにロールバックするのも簡単です。</p>
+<p>以上が、Gitによる共同開発の基本の流れ、および共同開発に関する基礎的な説明です。まずはこのイメージがすんなりと来るようにしてください。なおbranchやその他重要な用語・機能があるのですが、またの機会にします。</p>
+</div>
+</div>
+</div>
+<div id="github" class="section level2">
+<h2>GitHubについて</h2>
+<p>GitHubはGitとよく混合されたり誤解されたりしますが、GitHubは<strong>共有リポジトリ置き場提供サービス</strong>です。</p>
+<p>共有リポジトリを利用するためには、メンバー全員がアクセスできるような対象(サーバなど)が必要です。それを自前で構築するとなると、専門スタッフや資金があればいいですがそうもいかないことが多いです。またオープンソースであるためには、世界中に向けてそのサーバへアクセスできるよう公開していくことになります。これらも人的・資金的コストなどかかります。</p>
+<p>そこでGitHubです。GitHubはアカウントを作ることで<strong>公開リポジトリを無制限に作成することができます</strong>。なお世界中にオープンにするわけには行かない時は、<strong>プライベートリポジトリ</strong>も作成することが可能です。基本有償ですが、学生・教員であるならば登録・申請することで5リポジトリのプライベートリポジトリが持てます。これは非常に大きいので絶対に取得しましょう。</p>
+<p>基本的な扱い(pushやpullなど)は同じです。またGitHubはWebインターフェースでブラウザ操作が可能です。この辺りはまたあとで説明します。</p>
 </div>
 
 <script type="text/javascript" src="libs/fluidbox/jquery.fluidbox.min.js"></script>

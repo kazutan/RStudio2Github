@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="kazutan" />
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<link href='libs/fluidbox/css/fluidbox.css' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+<link href='include/css/style.css' rel='stylesheet' type='text/css'>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title"><ol start="2" style="list-style-type: decimal">
+<li>RStudioとGitHubの連携</li>
+</ol></h1>
+<h4 class="author"><em>kazutan</em></h4>
+<h4 class="date"><em>2015年9月12日</em></h4>
+</div>
+
+
+<div class="section level2">
+<h2>事前の手続き</h2>
+<ul>
+<li>まずはGitHubのサイトで新規リポジトリを作成してください。</li>
+<li>リポジトリ名は、後でRStudioで作るプロジェクト名と一致させておくとわかりやすいです</li>
+<li>この際.gitignoreは不要です(RStudioが自動的に作ってくれるから)</li>
+<li>ライセンスは選んでおいたほうが楽です</li>
+<li>README.mdはとりあえず作っておいてOK</li>
+<li>このリポジトリの「<a href="mailto:git@github.com">git@github.com</a>:ほげほげ」が後から必要になります(これがリポジトリURLです)</li>
+</ul>
+</div>
+<div id="github" class="section level2">
+<h2>GitHubリポジトリとプロジェクトフォルダをつなげる</h2>
+<p>いくつかパターンがあります。</p>
+<div class="section level3">
+<h3>新規プロジェクトで新しいフォルダから作る</h3>
+<p>一番楽です。</p>
+<ol style="list-style-type: decimal">
+<li>「New Project…」で新規プロジェクトを作る</li>
+<li>「Version Control」を選択</li>
+<li>「Git」を選択</li>
+<li>“Repository URL:”にGitHubで作ったリポジトリURLをコピペ</li>
+<li>“Project directory name:”は自動ではいります</li>
+<li>“Create (ry”はいつもどおりプロジェクトのフォルダを設置する場所を指定</li>
+</ol>
+<p>これでOKです。この方法の基本的な考え方は、「すでにGitHubに存在するリポジトリをLocalにクローン(フォーク? ブランチ?)して、それをRStudioでプロジェクト化してバージョン管理」です。</p>
+</div>
+<div id="github" class="section level3">
+<h3>既存のプロジェクトフォルダをGitHubリポジトリにつなげる</h3>
+<p>けっこうハマりどころがおおいし面倒。</p>
+<div id="on" class="section level4">
+<h4>バージョン管理のスイッチをONにする</h4>
+<ol style="list-style-type: decimal">
+<li>既存のプロジェクトを開く</li>
+<li>Tools→Project Options… を開く</li>
+<li>Git/SVNから、“Version control system:”をGitにする</li>
+<li>「initつくるかい?(意訳)」と聞かれるので“OK”をクリック</li>
+<li>その後も“OK”をクリック</li>
+</ol>
+<p>これで、まずLocalでGit(バージョン管理)がスタートします。ここで、<strong>一度RStudioを再起動</strong>してください。再起動したら、今後はGitHubにつなぎます:</p>
+</div>
+<div class="section level4">
+<h4>リモートリポジトリとつなげる</h4>
+<ol start="6" style="list-style-type: decimal">
+<li>Tools→Shell…で、端末を開く</li>
+<li><p>以下のコマンドを入力</p>
+<p>$ git remote add origin {リポジトリURL}</p></li>
+</ol>
+<p>これは、Localのリポジトリに対して「リモート先として{リポジトリURL}を追加してくれ」という命令です。正確には違うと思いますが多分大丈夫です。このまま端末でいきます:</p>
+<ol start="8" style="list-style-type: decimal">
+<li><p>以下のコマンドを入力</p>
+<p>$ git add .</p></li>
+</ol>
+<p>ローカルのリポジトリにこのプロジェクトたちのファイルを登録します。詳しくは別紙資料を。<br />この後Pushしたくなりますが、実行すると(多分)弾かれます。「一度もPullしてねーけぇだめじゃ(適当意訳)」と怒られます。そこで先にリモート先のリポジトリをPullします。</p>
+<ol start="9" style="list-style-type: decimal">
+<li><p>以下のコマンドを入力</p>
+<p>$ git pull {リポジトリURL}</p></li>
+</ol>
+<p>うまくpullしてmergeできるようなら、commitコメント入力を求められます。なおこの時のエディタはvimなので、vimの操作方法が求められます。別紙資料p.26参照。<br />もしここでpullがエラーでうまく行かない時は、とりあえずfetchしてからrebaseやmergeを実行してください。</p>
+<p>この作業が成功すると、LocalのプロジェクトフォルダにGitHubのリポジトリにあったLicenseやREADME.mdなどが入ってくるはずです。あとはpushしてみましょう。</p>
+<ol start="10" style="list-style-type: decimal">
+<li><p>以下のコマンドを入力</p>
+<p>$ git push</p></li>
+</ol>
+<p>うまく行ったかどうか、GitHubの自分のリポジトリを確認してください。ちゃんとGitHubにまで届いていたらOKです。こで、<strong>一度RStudioを再起動</strong>してください。</p>
+</div>
+</div>
+</div>
+<div id="rstudio" class="section level2">
+<h2>RStudioでのバージョン管理</h2>
+<p>上記手続きでバージョン管理をスタートさせると、一番上のメニューアイコンでGitのボタンが出ます。ここで管理していきます。</p>
+<div id="commit" class="section level3">
+<h3>Commitについて</h3>
+<p>編集してファイルを保存したらCommitしてください。“Stage”ってのが舞台に上げるというニュアンスでOKです。StageにチェックをいれてCommitを実行すればCommitされます。</p>
+</div>
+<div id="diff" class="section level3">
+<h3>diffについて</h3>
+<p>差分です。どこが変わったのかをチェックできます。</p>
+</div>
+<div id="history" class="section level3">
+<h3>Historyについて</h3>
+<p>どんな流れなのか、そして現在のブランチやHEADなどをみることができます。</p>
+</div>
+</div>
+<div class="section level2">
+<h2>その他</h2>
+<p>基本はGitです。一緒にGitを勉強しましょう。</p>
+<p>以上。</p>
+</div>
+
+<script type="text/javascript" src="libs/fluidbox/jquery.fluidbox.min.js"></script>
+<script type="text/javascript" src="include/js/enable-fluidbox.js"></script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="kazutan" />
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<link href='libs/fluidbox/css/fluidbox.css' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+<link href='include/css/style.css' rel='stylesheet' type='text/css'>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title"><ol start="3" style="list-style-type: decimal">
+<li>forkとpull request</li>
+</ol></h1>
+<h4 class="author"><em>kazutan</em></h4>
+<h4 class="date"><em>2015年9月12日</em></h4>
+</div>
+
+
+<div id="githubforkpull-requests" class="section level2">
+<h2>githubでforkしてpull requestsまで</h2>
+<div id="fork" class="section level3">
+<h3>まずはfork</h3>
+<p>ブラウザを開いて、事前にGithubにログインしておいてください。</p>
+<ol style="list-style-type: decimal">
+<li>ブラウザでforkしたいリポジトリ(のトップ)を表示</li>
+<li>forkボタン(リポジトリ名のヨコの+マーク)をクリック</li>
+<li>これでfork完了</li>
+<li>ファイル作成のウィンドウが出ますが、とりあえずキャンセルでOKです</li>
+</ol>
+</div>
+<div id="rstudio" class="section level3">
+<h3>ローカルに持ってくる(RStudioを利用)</h3>
+<ol style="list-style-type: decimal">
+<li>forkしたら、自分のリポジトリ一覧へ移動</li>
+<li>(自分のアカウント名)/(forkしたリポジトリ名)のリポジトリをクリック</li>
+<li>画面右側のところにある、「HTTPS clone URL」のところからURLをコピーしておく</li>
+<li>RStudioを起動</li>
+<li>[File]→[new Project…]を選択</li>
+<li>[Version Control]→[Git]を選択</li>
+<li>[Repository URL:]には3でコピーしたURLを貼り付ける</li>
+<li>すると自動的に「Project directory name:]が入るので、問題なければそのまま。</li>
+<li>[Create project as subdirectory of:]はローカルディレクトリの場所です。お好みで。</li>
+<li>[OK]を押すと、RStudioが自動的に<strong>自分の</strong>リポジトリからcloneしてRStudioのプロジェクトを作成します</li>
+<li>あとは通常通りプロジェクトの開発をします</li>
+</ol>
+</div>
+<div class="section level3">
+<h3>編集</h3>
+<p>自分が編集したいように編集してください。なおこれはバージョンコントロールが効いています。</p>
+</div>
+<div id="push" class="section level3">
+<h3>コミットして(自分の方のリポジトリへ)push</h3>
+<p>編集してファイルを保存します。この時点で「ローカルにcloneしてきたファイルを編集して保存した」状態になります。</p>
+<p>この「ローカルにcloneしてきたファイルの変更」をcommitしましょう。Gitタブからcommitします。これで、「ローカルにあるリポジトリに変更がコミット」されました。これらはmyリポジトリと同一です。</p>
+<p>次に、これを自分のremoteリポジトリ(今回の場合Githubにおいてるリポジトリ)に反映(push)しましょう。ここでさっきつまづきました。</p>
+<p>まずはRStudioでそのまま[↑push]を押してみてください。これでエラーが出ずにうまくいけば問題なしです。でも多分エラーが出ます。初回のpushの場合、大抵エラーがでるんじゃないかなと思います。エラーが出た場合は、仕方ないのでterminalで実行します。　RStudioのメニューから[Tooles]→[Shell…]でTerminalを起動させてください。</p>
+<p>現在のプロジェクトのディレクトリでTerminalが立ち上がるはずですので、それを確認したら以下の操作を実行してください:</p>
+<pre><code>$ git push</code></pre>
+<p>これですんなり行けばOKです。場合によってはGithubのアカウントとpassを求めてくるかと思いますので、その時は入力してください。どうもRStudio上でのPushやPullはちょいちょいうまくいかないことが多いですので、commitまではRStudio、PushあたりはTerminalでやったほうが無難ですね…</p>
+<p>pushがうまくいったら、ブラウザで自分のリポジトリを確認してみてください。変更が反映されていればOKです。</p>
+</div>
+<div id="pull-request" class="section level3">
+<h3>pull requestを出す</h3>
+<p>では自分が変更した分を、本家のリポジトリに組み入れてもらう(pull)ように、リクエスト(pull request)を出してみましょう。</p>
+<p>まず、<strong>自分の</strong>Github上にあるリポジトリをブラウザで表示します。最新コミット情報の右にある「Pull request」をクリックします。すると、本家のリポジトリとforkしてきた自分のリポジトリを自動的に比較して、mergeできるかどうかを検討します。変更がぶつかってしまう場合には、ディスカッションが必要になるでしょう。</p>
+<p>内容を確認し、リクエストを出してもいいのであれば、緑色の[Create pull request]をクリックしてください。</p>
+<p>その後に、このpull requestのタイトルと内容を記述するウィンドウが出ますので、相手をはじめ他の人に「このpull requestはどういう内容なのか」がわかるように記述しましょう。記述したら、プルリクを投げてください。これでこちらの作業は終了です。</p>
+<p>確認のため、<strong>本家の</strong>リポジトリを見に行ってください。画面右側のサイドメニューにある、[Pull request]の数字が増えてるはずです。そこをクリックすると、先ほど投げたプルリクが表示されています。</p>
+</div>
+</div>
+
+<script type="text/javascript" src="libs/fluidbox/jquery.fluidbox.min.js"></script>
+<script type="text/javascript" src="include/js/enable-fluidbox.js"></script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
